@@ -1,0 +1,14 @@
+body{
+    text-align: center;
+    font-family: helvetica, sans-serif;
+}
+
+h1{
+    font-size: 41px;
+}
+
+#buttons-container button{
+    border: none;
+    padding: 10px 15px;
+    margin: 0 10px;
+}
