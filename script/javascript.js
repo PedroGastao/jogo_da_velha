@@ -57,8 +57,6 @@ function checandoVencedor(){
         }
     } */    
    
-   
-   
      function checando(b1,b2,b3){
         if(b1.childNodes.length>0 && b2.childNodes.length>0 && b3.childNodes.length>0 ){
             let child1 = b1.childNodes[0].className
@@ -73,7 +71,23 @@ function checandoVencedor(){
         }
 
     }
-
+    
     checando(box1,box2,box3) 
     checando(box4,box5,box6)
+    checando(box7,box8,box9)
+    checando(box1,box4,box7)
+    checando(box2,box5,box8)
+    checando(box3,box6,box9)
+    checando(box1,box5,box9)
+    checando(box3,box5,box7)
+
+    let contador = 0
+    for(let i=0; i< boxes.length; i++){
+        if(boxes[i].childNodes[0] !=undefined ){
+            contador++
+        }
+    }
+    if(contador == 9){
+        console.log("deu velha")
+    }
 }
