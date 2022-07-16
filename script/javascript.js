@@ -12,19 +12,22 @@ let player2 = 0
 //evento de click 
 for(let i =0;i < boxes.length; i++){
     boxes[i].addEventListener("click", function (){
-        let jogada
-        if(player1 == player2){
-            jogada = x
-        }else{
-            jogada = o
-        }
+        let jogada = ChecandoJogador(player1,player2)
+       
         if(this.childNodes.length == 0){
             let cloneJogada = jogada.cloneNode(true)
 
             this.appendChild(cloneJogada)
-    
+            
+            //computando jogada
             if(player1 == player2){
                 player1++
+
+                if(segundoJogador == "IA-players"){
+
+                    JogadaIA()
+                    player2++
+                }
             }else{
                 player2++
             } 
@@ -32,7 +35,29 @@ for(let i =0;i < boxes.length; i++){
         }
     })
 }
+//evento de click para o butao
+for(let i =0; i<buttons.length;i++){
+    buttons[i].addEventListener('click',function(){
+        segundoJogador = this.getAttribute("id") 
+        
+        for(let j=0; j< buttons.length;j++){
+            buttons[j].style.display = "none"
+        }
 
+        setTimeout(function(){
+            let container = document.querySelector("#container-jogo")
+            container.classList.remove("hide")
+        },500)
+    })
+}
+
+function ChecandoJogador(player1,player2){
+    if(player1 == player2){
+        return jogada = x
+    }else{
+        return jogada= o
+    }
+}
 
 function checandoVencedor(){
     let box1 = document.getElementById("bloco-1")
@@ -64,9 +89,9 @@ function checandoVencedor(){
             let child3 = b3.childNodes[0].className
             
             if(child1 == "x" && child2 == "x" && child3 == "x"){
-                return console.log("X venceu")
+                DeclarandoVencedor("x")
             }else if(child1 == "o" && child2 == "o" && child3 == "o"){
-                return console.log("o venceu")
+                DeclarandoVencedor("o")
             }
         }
 
@@ -88,6 +113,62 @@ function checandoVencedor(){
         }
     }
     if(contador == 9){
-        console.log("deu velha")
+        DeclarandoVencedor("Deu velha")
+    }
+
+
+}
+
+function DeclarandoVencedor(vencedor){
+    let placarx = document.querySelector("#scoreboard-1")
+    let placaro = document.querySelector("#scoreboard-2")   
+    let msg = ""
+    if(vencedor == "x"){
+        placarx.textContent = parseInt(placarx.textContent)+1
+        msg = "O JOGADOR 1 VENCEU"
+    }else if(vencedor == "o"){
+        placaro.textContent = parseInt(placaro.textContent)+1
+        msg = "O JOGADOR 2 VENCEU"
+    }else{
+        msg = "DEU EMPATE!"
+    }
+
+    messageText.innerHTML = msg
+    messageContainer.classList.remove("hide")
+
+    setTimeout(function(){
+        messageContainer.classList.add("hide")
+    },3000)
+
+    player1 = 0
+    player2 = 0
+
+    let boxRemove = document.querySelectorAll(".box div")
+
+    for(let i=0; i< boxRemove.length;i++){
+        boxRemove[i].parentNode.removeChild(boxRemove[i])
+    }
+}
+
+function JogadaIA(){
+    let cloneO = o.cloneNode(true)
+    contador = 0
+    fiilled = 0
+
+    for(let i=0; i< boxes.length; i++){
+        let randomNumber = Math.floor(Math.random() *5)
+
+        if(boxes[i].childNodes[0] == undefined){
+            if(randomNumber <=1){
+                boxes[i].appendChild(cloneO)
+                contador++
+                break
+            }
+        }else{
+            fiilled++
+        }
+    }
+    if(contador == 0 && fiilled<9){
+        JogadaIA()
     }
 }

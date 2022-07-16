@@ -59,10 +59,10 @@ h1{
     margin-top: 14px;
 
 }
-/*
+
 .hide{
     display: none !important;
-} */
+} 
 
 .score-box{
     margin: 0 20px;
@@ -106,5 +106,5 @@ background-color: black;
 color: white;
 padding: 20px;
 
-display: none;
+
 }
